@@ -1,0 +1,91 @@
+{
+  "expo": {
+    "name": "마일스탬프",
+    "slug": "milestamp-phone",
+    "version": "1.0.12",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "milestamp",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "kr.milestamp.phone"
+    },
+    "android": {
+      "package": "kr.milestamp.phone",
+      "versionCode": 31,
+      "adaptiveIcon": {
+        "backgroundColor": "#18181B",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-asset",
+      "expo-sharing",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Pretendard-Regular.otf",
+            "./assets/fonts/Pretendard-Medium.otf",
+            "./assets/fonts/Pretendard-SemiBold.otf",
+            "./assets/fonts/Pretendard-Bold.otf",
+            "./assets/fonts/Pretendard-ExtraBold.otf"
+          ]
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": true
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "차 화면의 연결 QR을 찍기 위해 카메라를 사용해요",
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": true
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "오늘 추천을 위해 지금 위치를 써요 (앱을 쓰는 동안만)",
+          "locationAlwaysAndWhenInUsePermission": false,
+          "locationAlwaysPermission": false,
+          "motionUsagePermission": false,
+          "isAndroidBackgroundLocationEnabled": false,
+          "isAndroidForegroundServiceEnabled": false
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#2C4A3E"
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "자랑 카드를 사진첩에 저장하기 위해 사용해요",
+          "savePhotosPermission": "자랑 카드를 사진첩에 저장하기 위해 사용해요",
+          "isAccessMediaLocationEnabled": false
+        }
+      ],
+      "./plugins/withReleaseSigning",
+      "./plugins/withAndroidAuto"
+    ]
+  }
+}

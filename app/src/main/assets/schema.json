@@ -1,0 +1,67 @@
+{
+  "packageName": "kr.milestamp.car",
+  "appDescription": "A family road-trip stamp app that recommends nearby places within the time left before going home and tells their stories on arrival.",
+  "invokeWord": "마일스탬프",
+  "version": "0.1.0",
+  "actionCalls": [
+    {
+      "type": "function",
+      "function": {
+        "name": "RECOMMEND_NEXT_PLACE",
+        "description": "Recommend the next place to visit that fits the remaining time before the family's target return time.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "preference": {
+              "type": "string",
+              "enum": [
+                "any",
+                "indoor",
+                "outdoor",
+                "homeward"
+              ],
+              "description": "Optional preference for the kind of place to recommend."
+            }
+          },
+          "required": []
+        },
+        "component": "service"
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "PLAY_PLACE_STORY",
+        "description": "Play the short audio story about the current or upcoming destination.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "audience": {
+              "type": "string",
+              "enum": [
+                "family",
+                "kids"
+              ],
+              "description": "Whether to play the full story or the short version for young children."
+            }
+          },
+          "required": []
+        },
+        "component": "service"
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "OPEN_STAMP_BOOK",
+        "description": "Open the family's stamp book showing collected place stamps.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        },
+        "component": "activity"
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+/* /embed/map — 폰 앱 WebView 안 지도. 어둡게는 지도 그림(타일)만 CSS 필터, 점·핀·선은 그대로 */
+.msmap{position:fixed;inset:0;background:#f4f4f5;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.msmap.dark{background:#18181b}
+.msmap .leaflet-control-attribution{font-size:9px}
+.msmap.dark .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.82) contrast(.9) saturate(.6)}
+/* 카카오 타일은 이름표가 없는 img → 우리 핀(data: 그림)만 빼고 필터 */
+.msmap.dark.kakao img:not([src^="data:"]){filter:invert(1) hue-rotate(180deg) brightness(.82) contrast(.9) saturate(.6)}
+.msmap .pin{width:30px;height:30px;border-radius:15px 15px 15px 2px;transform:rotate(-45deg);background:#2C4A3E;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.msmap .d{width:16px;height:16px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:content-box;cursor:pointer}
+.msmap .d.s{width:22px;height:22px;border-width:4px;box-shadow:0 0 0 3px rgba(17,17,16,.35),0 2px 6px rgba(0,0,0,.4)}
+/* Leaflet 점·화살표 감싸개: 크기와 상관없이 가운데가 그 자리 */
+.msmap .lw{position:absolute;left:0;top:0;transform:translate(-50%,-50%)}
+/* 번호 점(코스 순서 1·2·3, '출발'): 글자 든 동그라미 · 중심 곳은 크게(.l) · 아래 작은 이름표(i) */
+.msmap .d.n{position:relative;min-width:22px;width:auto;height:22px;padding:0 4px;border-width:2px;border-radius:13px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;color:#fff;font:800 12px/1 -apple-system,Roboto,"Noto Sans KR",sans-serif;letter-spacing:-.2px;white-space:nowrap}
+.msmap .d.n b{font-weight:800}
+.msmap .d.n.l{min-width:30px;height:30px;border-radius:17px;border-width:3px;font-size:15px;box-shadow:0 0 0 3px rgba(31,157,85,.28),0 2px 6px rgba(0,0,0,.4)}
+.msmap .d.n.s{width:auto;border-width:3px}
+.msmap .d i{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:3px;padding:2px 6px;border-radius:7px;background:rgba(17,17,16,.86);color:#fff;font:700 10.5px/1.2 -apple-system,Roboto,"Noto Sans KR",sans-serif;font-style:normal;white-space:nowrap;pointer-events:none}
+/* 방향 화살표 (선 색 동그라미 + 흰 화살표) */
+.msmap .ar{width:17px;height:17px;pointer-events:none;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.35))}
+.msmap .ar svg{display:block}
+.msmap .c{box-sizing:border-box;border-radius:50%;background:rgba(17,17,16,.84);color:#fff;font:700 13px/1 -apple-system,Roboto,sans-serif;display:flex;align-items:center;justify-content:center;border:3px solid;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer}
+.msmap .h{width:26px;height:26px;border-radius:8px;opacity:.92;background:#2C4A3E;border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 5px rgba(0,0,0,.4);box-sizing:border-box}
+.msmap .err{position:absolute;left:12px;right:12px;top:12px;padding:10px 12px;border-radius:10px;background:rgba(17,17,16,.86);color:#fff;font:600 13px/1.4 -apple-system,Roboto,sans-serif;z-index:5}
+/* 코스 지도 A-1: 바탕 지도 채도만 살짝 빼서 선이 돋보이게 (점·선·핀은 그대로) */
+.msmap.route:not(.dark) .leaflet-tile-pane{filter:saturate(.7)}
+.msmap.route.kakao:not(.dark) img:not([src^="data:"]){filter:saturate(.7)}
+/* 번호 점(코스): 흰 동그라미 + 그곳에 도착하는 구간 색 테두리·글자 */
+.msmap .d.n.r{min-width:24px;height:24px;border-width:2.5px;border-radius:13px;font-size:12.5px;box-shadow:0 1px 3px rgba(27,42,34,.3)}
+.msmap .d.n.r.l{min-width:30px;height:30px;border-width:3px;border-radius:17px;font-size:15px;box-shadow:0 0 0 3px rgba(255,255,255,.6),0 2px 6px rgba(27,42,34,.35)}
+.msmap .d.n.r.s{border-width:3.5px;box-shadow:0 0 0 3px rgba(17,17,16,.25),0 2px 6px rgba(0,0,0,.35)}
+/* 흐르는 › 판 (flow.ts): 크기 없는 판, 안의 SVG·말풍선이 판 좌표 그대로 넘쳐 보인다 */
+.msmap .flow{position:absolute;left:0;top:0;width:0;height:0;overflow:visible;pointer-events:none}
+.msmap .flow svg{position:absolute;left:0;top:0;overflow:visible}
+.msmap .flow .chev{fill:none;stroke:#fff;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.95}
+.msmap .flow .chip{position:absolute;transform:translate(-50%,-50%);padding:0 8px;height:22px;border-radius:11px;border:1.5px solid;background:#fff;box-sizing:border-box;display:flex;align-items:center;font:700 12px/1 -apple-system,Roboto,"Noto Sans KR",sans-serif;letter-spacing:-.2px;white-space:nowrap;font-variant-numeric:tabular-nums;box-shadow:0 1px 3px rgba(27,42,34,.18)}
+/* '시간 보기' 단추 (오른쪽 위, 코스 지도 · 구간 시간이 있을 때만) */
+.msmap .tbtn{position:absolute;top:10px;right:10px;z-index:10;display:flex;align-items:center;gap:5px;height:32px;padding:0 12px 0 10px;border-radius:16px;border:0;background:rgba(255,255,255,.95);color:#3a3935;font:600 13px/1 -apple-system,Roboto,"Noto Sans KR",sans-serif;letter-spacing:-.2px;box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.msmap .tbtn svg{flex:none}
+.msmap .tbtn[aria-pressed="true"]{background:#1d3b31;color:#fff}
+.msmap.dark .tbtn{background:rgba(32,32,30,.94);color:#e8e7e2}
+.msmap.dark .tbtn[aria-pressed="true"]{background:#e8e7e2;color:#1d3b31}

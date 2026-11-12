@@ -1,0 +1,6 @@
+{
+  "platforms": ["android"],
+  "android": {
+    "modules": ["kr.milestamp.phone.auto.MilestampAutoModule"]
+  }
+}

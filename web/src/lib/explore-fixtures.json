@@ -1,0 +1,35 @@
+{
+  "_설명": "TourAPI KorService2 답 모양 시험용 (실제 키 없이). 값은 꾸민 것 — 운영 키로 확인은 배포 뒤.",
+  "festival": {
+    "response": {
+      "header": { "resultCode": "0000", "resultMsg": "OK" },
+      "body": {
+        "items": {
+          "item": [
+            { "addr1": "대구광역시 동구 팔공산로 1", "addr2": "", "contentid": "3100001", "contenttypeid": "15", "eventstartdate": "20261020", "eventenddate": "20261109", "firstimage": "http://tong.visitkorea.or.kr/cms/a.jpg", "firstimage2": "", "mapx": "128.6950", "mapy": "35.9910", "lDongRegnCd": "27", "title": "팔공산 단풍축제" },
+            { "addr1": "경상북도 경주시 첨성로", "addr2": "", "contentid": "3100002", "contenttypeid": "15", "eventstartdate": "20261031", "eventenddate": "20261101", "firstimage": "", "mapx": "129.2190", "mapy": "35.8350", "lDongRegnCd": "47", "title": "경주 신라문화제" },
+            { "addr1": "서울특별시 종로구", "addr2": "", "contentid": "3100003", "contenttypeid": "15", "eventstartdate": "20261101", "eventenddate": "20261130", "firstimage": "https://tong.visitkorea.or.kr/cms/c.jpg", "mapx": "126.9770", "mapy": "37.5700", "lDongRegnCd": "11", "title": "서울 빛초롱축제" },
+            { "addr1": "대구광역시 중구", "addr2": "", "contentid": "3100004", "contenttypeid": "15", "eventstartdate": "20260901", "eventenddate": "20261001", "firstimage": "", "mapx": "128.59", "mapy": "35.87", "lDongRegnCd": "27", "title": "끝난 축제" },
+            { "addr1": "주소 없음", "contentid": "3100005", "contenttypeid": "15", "eventstartdate": "20261029", "eventenddate": "20261102", "mapx": "0", "mapy": "0", "title": "좌표 없는 축제" },
+            { "addr1": "대구광역시 수성구", "contentid": "3100006", "contenttypeid": "15", "eventstartdate": "20261101", "eventenddate": "20261102", "mapx": "128.6179", "mapy": "35.8272", "lDongRegnCd": "27", "title": "수성못 페스티벌" }
+          ]
+        },
+        "numOfRows": 500, "pageNo": 1, "totalCount": 6
+      }
+    }
+  },
+  "search": {
+    "response": {
+      "header": { "resultCode": "0000", "resultMsg": "OK" },
+      "body": {
+        "items": {
+          "item": { "addr1": "경상북도 안동시 풍천면 전서로 186", "addr2": "(풍천면)", "contentid": "125413", "contenttypeid": "12", "firstimage": "http://tong.visitkorea.or.kr/cms/h.jpg", "mapx": "128.5180000000", "mapy": "36.5390000000", "lDongRegnCd": "47", "title": "안동 하회마을 [유네스코 세계유산]" }
+        },
+        "numOfRows": 30, "pageNo": 1, "totalCount": 1
+      }
+    }
+  },
+  "empty": { "response": { "header": { "resultCode": "0000", "resultMsg": "OK" }, "body": { "items": "", "numOfRows": 30, "pageNo": 1, "totalCount": 0 } } },
+  "keyError": { "resultCode": "30", "resultMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR" },
+  "headerError": { "response": { "header": { "resultCode": "22", "resultMsg": "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR" } } }
+}

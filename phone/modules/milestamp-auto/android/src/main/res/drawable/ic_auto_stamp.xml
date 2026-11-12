@@ -1,0 +1,8 @@
+<!-- 기본 도장 아이콘 (도장 그림을 못 받았을 때): 잉크 초록 원 + 별 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp" android:height="96dp" android:viewportWidth="96" android:viewportHeight="96">
+  <path android:fillColor="#2C4A3E" android:pathData="M48,4a44,44 0,1 1,0 88a44,44 0,1 1,0 -88z"/>
+  <path android:fillColor="#F4F1EA" android:pathData="M48,11a37,37 0,1 1,0 74a37,37 0,1 1,0 -74z"/>
+  <path android:fillColor="#2C4A3E" android:pathData="M48,16a32,32 0,1 1,0 64a32,32 0,1 1,0 -64z"/>
+  <path android:fillColor="#F2B230" android:pathData="M48,26l6.5,13.2 14.5,2.1 -10.5,10.2 2.5,14.5 -13,-6.8 -13,6.8 2.5,-14.5 -10.5,-10.2 14.5,-2.1z"/>
+</vector>

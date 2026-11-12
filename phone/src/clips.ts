@@ -1,0 +1,20 @@
+// tools/introgen/sync_web.py 가 만든다 — 손으로 고치지 말 것
+export type Clip = { src: number; text: string; duration: number; starts: number[] };
+
+export const VOICE = "하윤 Hayoon (Fish 공식)";
+
+export const CLIPS: Record<string, Clip> = {
+  dgsm_full_60s: { src: require('../assets/intro/dgsm_full_60s.mp3'), text: "곧 국립대구과학관에 도착해요. 천체투영관에 들어가면 둥근 천장 가득 별이 쏟아진대요. 밖에는 성덕대왕신종을 디지털로 되살린 종도 있어요. 신기한 걸 하나씩 찾아서, 이따 차에서 서로 알려 줘요.", duration: 14.73, starts: [0.1, 2.86, 6.96, 11.14, 12.9] },
+  dgsm_kids_30s: { src: require('../assets/intro/dgsm_kids_30s.mp3'), text: "곧 별을 보러 가요! 로켓도 있을까?", duration: 3.08, starts: [0.1, 1.8] },
+  hahoe_full_60s: { src: require('../assets/intro/hahoe_full_60s.mp3'), text: "곧 안동 하회마을이에요. 강물이 마을을 빙 돌아 흐른다고 해서 하회라고 불러요. 웃는 얼굴 하회탈을 찾아서, 누가 제일 똑같이 웃는지 내기해요!", duration: 10.86, starts: [0.1, 2.31, 6.78] },
+  hahoe_kids_30s: { src: require('../assets/intro/hahoe_kids_30s.mp3'), text: "곧 강이 빙 도는 마을이에요. 웃는 탈을 찾아봐요!", duration: 4.36, starts: [0.1, 2.39] },
+  hwabon_full_60s: { src: require('../assets/intro/hwabon_full_60s.mp3'), text: "곧 화본역이에요. 1936년에 문을 연 아주 작은 시골 기차역이에요. 역 옆 높다란 탑은, 옛날 증기기관차가 물을 마시던 급수탑이래요. 역 앞에서 가족사진 한 장 찍어요!", duration: 16.53, starts: [0.1, 1.71, 6.4, 6.64, 11.39] },
+  hwabon_kids_30s: { src: require('../assets/intro/hwabon_kids_30s.mp3'), text: "곧 기차역이에요. 칙칙폭폭 기차가 물 마시던 탑을 찾아봐요!", duration: 4.33, starts: [0.1, 1.69] },
+  samguk_full_60s: { src: require('../assets/intro/samguk_full_60s.mp3'), text: "곧 삼국유사테마파크예요! 아주 먼 옛날, 일연 스님이 우리 옛이야기를 모아 책을 썼어요. 그 책이 바로 삼국유사예요. 여기서는 그 신기한 이야기들을 놀이로 만날 수 있대요. 해룡 미끄럼틀도 꼭 타 봐요!", duration: 15.85, starts: [0.1, 2.61, 4.16, 7.56, 10.24, 13.73] },
+  samguk_kids_30s: { src: require('../assets/intro/samguk_kids_30s.mp3'), text: "곧 옛이야기 놀이공원이에요! 용을 찾아보자!", duration: 3.51, starts: [0.1, 2.13] },
+  seokgul_full_60s: { src: require('../assets/intro/seokgul_full_60s.mp3'), text: "곧 군위 삼존석굴에 도착해요. 높은 절벽 한가운데에 동굴이 하나 있는데요, 천삼백 년 전 신라 사람들이 그 안에 부처님 세 분을 모셨대요. 경주 석굴암보다도 먼저 만들어졌답니다. 도착하면 부처님 양옆에 누가 계신지 같이 찾아봐요.", duration: 17.04, starts: [0.1, 2.83, 5.85, 7.86, 10.36, 13.27, 15.94] },
+  seokgul_kids_30s: { src: require('../assets/intro/seokgul_kids_30s.mp3'), text: "곧 바위 속 부처님을 만나요! 부처님이 몇 분인지 같이 세어 볼까요?", duration: 4.98, starts: [0.1, 2.46] },
+  thearc_full_60s: { src: require('../assets/intro/thearc_full_60s.mp3'), text: "곧 디아크예요. 여기서 낙동강과 금호강, 강 두 개가 만나요. 물가에 은빛 건물이 있는데, 꼭 물 위로 뛰어오르는 물고기처럼 생겼어요. 비 오는 날엔 강물 위로 빗방울이 동그랗게 퍼져서 더 예쁘대요.", duration: 14.54, starts: [0.1, 1.7, 3.55, 5.17, 7.09, 10.2, 13.45] },
+  thearc_kids_30s: { src: require('../assets/intro/thearc_kids_30s.mp3'), text: "곧 은빛 물고기 건물이에요. 강이 두 개 만나는 곳을 찾아봐요!", duration: 4.65, starts: [0.1, 2.57] },
+  rear_seat: { src: require('../assets/intro/rear_seat.mp3'), text: "잠깐만요! 뒷좌석에 아이가 있는지 꼭 확인해 주세요.", duration: 3.73, starts: [0.1] },
+};

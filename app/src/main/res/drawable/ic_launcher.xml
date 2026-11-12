@@ -1,0 +1,8 @@
+<!-- 임시 아이콘: 검은 사각 + 흰 고리 + 노랑 점 (스토리보드 헤더와 같은 모양). 최종은 512×512 PNG -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#18181B" android:pathData="M18,18h72v72h-72z"/>
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="5" android:fillColor="#00000000"
+        android:pathData="M54,34a20,20 0,1 1,-0.01,0z"/>
+    <path android:fillColor="#F2B230" android:pathData="M70,30a5,5 0,1 1,-0.01,0z"/>
+</vector>

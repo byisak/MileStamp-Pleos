@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* 꿀앱 그래파이트 토큰 (차 화면 Theme.kt와 같은 색). 포인트 노랑은 로고 점에만, 빨강은 경고에만. */
+@theme {
+  --color-bg: #f3f3f3;
+  --color-card: #ffffff;
+  --color-fg: #18181b;
+  --color-sub: #52525b;
+  --color-line: #e4e4e7;
+  --color-primary: #27272a;
+  --color-point: #f2b230;
+  --color-warn: #b91c1c;
+  --color-ink: #2c4a3e;
+  --font-sans: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}

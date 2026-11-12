@@ -1,0 +1,29 @@
+{
+  "keyword": {
+    "meta": { "total_count": 7, "pageable_count": 7, "is_end": true },
+    "documents": [
+      { "id": "11111", "place_name": "팔공산 왕건길 카페", "category_name": "음식점 > 카페", "category_group_code": "CE7", "address_name": "대구 동구 용수동 1", "road_address_name": "대구 동구 팔공산로 1", "x": "128.6950", "y": "35.9900" },
+      { "id": "22222", "place_name": "팔공산 순두부", "category_name": "음식점 > 한식 > 순두부", "category_group_code": "FD6", "address_name": "대구 동구 용수동 2", "road_address_name": "", "x": "128.6960", "y": "35.9910" },
+      { "id": "33333", "place_name": "팔공산자연공원", "category_name": "여행 > 공원 > 자연공원", "category_group_code": "", "address_name": "대구 동구 용수동 산1", "road_address_name": "", "x": "128.7000", "y": "36.0100" },
+      { "id": "44444", "place_name": "팔공산 갓바위", "category_name": "여행 > 관광,명소 > 문화유적", "category_group_code": "AT4", "address_name": "경북 경산시 와촌면 대한리 산44", "road_address_name": "", "x": "128.7320", "y": "35.9770" },
+      { "id": "55555", "place_name": "팔공산 키즈카페 뛰뛰", "category_name": "가정,생활 > 어린이 > 키즈카페", "category_group_code": "CE7", "address_name": "대구 동구 지묘동 5", "road_address_name": "대구 동구 팔공로 55", "x": "128.6400", "y": "35.9300" },
+      { "id": "66666", "place_name": "대구방짜유기박물관", "category_name": "문화,예술 > 문화시설 > 박물관", "category_group_code": "CT1", "address_name": "대구 동구 도학동 6", "road_address_name": "대구 동구 도장길 29", "x": "128.6560", "y": "35.9880" },
+      { "id": "77777", "place_name": "팔공산 동화사", "category_name": "여행 > 관광,명소 > 사찰", "category_group_code": "AT4", "address_name": "대구 동구 도학동 35", "road_address_name": "대구 동구 동화사1길 1", "x": "128.6985", "y": "35.9843" }
+    ]
+  },
+  "address": {
+    "meta": { "total_count": 1 },
+    "documents": [
+      { "address_name": "대구 북구 연암로 40", "address_type": "ROAD_ADDR", "x": "128.5828", "y": "35.8858",
+        "address": { "address_name": "대구 북구 산격동 1300" },
+        "road_address": { "address_name": "대구 북구 연암로 40", "building_name": "북구청" } }
+    ]
+  },
+  "coord2address": {
+    "meta": { "total_count": 1 },
+    "documents": [
+      { "road_address": { "address_name": "대구 달성군 화원읍 사문진로 1", "building_name": "" },
+        "address": { "address_name": "대구 달성군 화원읍 성산리 1" } }
+    ]
+  }
+}

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature android:name="android.hardware.type.automotive" android:required="true" />
+
+    <!-- Pleos Vehicle SDK: 꼭 필요한 읽기 권한만 (승인 안 된 권한을 넣으면 심사 탈락) -->
+    <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />   <!-- 누적 주행거리 -->
+    <uses-permission android:name="pleos.car.permission.CAR_SEATS" />   <!-- 2열 탑승 -->
+    <uses-permission android:name="pleos.car.permission.CAR_DOORS" />   <!-- 운전석 문 -->
+    <!-- Pleos NaviHelper SDK -->
+    <uses-permission android:name="pleos.car.permission.NAVI_ROUTE" />        <!-- 남은 시간·도착·현재 위치 -->
+    <uses-permission android:name="pleos.car.permission.NAVI_ROUTE_SEARCH" /> <!-- 다음 목적지 설정 -->
+    <!-- AAOS 표준: 기어·속도 (Pleos 문서 권장 경로) -->
+    <uses-permission android:name="android.car.permission.CAR_POWERTRAIN" />
+    <uses-permission android:name="android.car.permission.CAR_SPEED" />
+    <!-- 위치 예비 경로(에뮬레이터 geo fix) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <!-- 길 안내 앱이 앞에 떠 있어도(우리 창이 숨어 있어도) 위치를 받기 위해 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <!-- Media3가 끼워 넣는 네트워크 상태 권한: 우리는 앱 안 MP3만 재생해서 필요 없음 (없으면 Media3가 '모름'으로 처리) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
+
+    <!-- 안드로이드 11+: 음성 합성 엔진(예비 소개 음성)을 찾으려면 선언해야 보인다 -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".MileStampApp"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MileStamp">
+
+        <!-- CCP(다이얼)는 지원하지 않음: 터치만으로 모두 조작 가능 -->
+        <meta-data android:name="com.hmg.rotary.ROTARY_SUPPORTED" android:value="false" />
+
+        <!-- 주행 중 사용 가능(DO) 선언을 하지 않음 → D단에서는 시스템이 화면을 가린다.
+             screenOrientation 미지정 = 세로 한 창. 창 폭은 사용자가 바꿀 수 있음. -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|density|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 글레오: "스탬프북 보여줘" -->
+            <intent-filter>
+                <action android:name="OPEN_STAMP_BOOK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 차량 신호 → 판정 엔진. 화면이 없어도 돈다. -->
+        <service
+            android:name=".trip.TripService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback|location" />
+
+        <!-- 도착 전 소개 음성: 미디어로 재생돼 운전석 화면의 음악 칸에 표시 -->
+        <service
+            android:name=".audio.IntroPlaybackService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
+
+        <!-- 글레오: "다음 갈 곳 추천해줘", "여기 이야기 들려줘" (component=service → sendBroadcast).
+             Pleos 규칙상 음성 함수는 최대 3개(나머지 하나는 OPEN_STAMP_BOOK = 화면). 다음 바꾸기·건너뛰기·집으로는 화면 버튼으로. -->
+        <receiver
+            android:name=".gleo.GleoActionReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="RECOMMEND_NEXT_PLACE" />
+                <action android:name="PLAY_PLACE_STORY" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".trip.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+</manifest>

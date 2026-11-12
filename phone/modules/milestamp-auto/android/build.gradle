@@ -1,0 +1,42 @@
+// 안드로이드 오토(Car App Library) 모듈 — 폰 앱 안에서 돌고 화면만 차 디스플레이에 띄운다.
+// 판정 엔진(engine/, 순수 Kotlin)은 복사하지 않고 소스 폴더를 그대로 읽어 함께 컴파일한다(읽기 전용 재사용).
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'kr.milestamp.phone.auto'
+version = '0.1.0'
+
+def carAppVersion = '1.7.0'
+
+android {
+  namespace "kr.milestamp.phone.auto"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+    consumerProguardFiles 'proguard-rules.pro'
+  }
+  sourceSets {
+    // phone/modules/milestamp-auto/android → 저장소 뿌리의 engine/
+    main.java.srcDirs += "${projectDir}/../../../../engine/src/main/kotlin"
+  }
+  testOptions {
+    unitTests.includeAndroidResources = true
+    unitTests.returnDefaultValues = true
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  implementation "androidx.car.app:app:$carAppVersion"
+  // 안드로이드 오토(폰에서 투사)용 호스트 연결·차량 신호(CarHardwareManager)
+  implementation "androidx.car.app:app-projected:$carAppVersion"
+
+  testImplementation "androidx.car.app:app-testing:$carAppVersion"
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'org.robolectric:robolectric:4.16'
+  testImplementation 'androidx.test:core:1.6.1'
+}

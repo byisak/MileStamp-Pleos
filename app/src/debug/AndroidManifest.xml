@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 디버그만: 에뮬레이터에서 맥의 개발 서버(http://10.0.2.2:3200)에 붙기 위해 평문 HTTP 허용 -->
+    <application android:usesCleartextTraffic="true">
+        <!-- 디버그 빌드 전용 시연 입력. release APK에는 들어가지 않는다. -->
+        <receiver
+            android:name=".debug.DebugReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="kr.milestamp.DEBUG" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

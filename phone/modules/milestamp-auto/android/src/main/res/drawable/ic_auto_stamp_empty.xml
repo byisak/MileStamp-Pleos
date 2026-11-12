@@ -1,0 +1,7 @@
+<!-- 아직 못 모은 칸: 점선 느낌의 회색 원 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp" android:height="96dp" android:viewportWidth="96" android:viewportHeight="96">
+  <path android:fillColor="#52525B" android:pathData="M48,4a44,44 0,1 1,0 88a44,44 0,1 1,0 -88z"/>
+  <path android:fillColor="#27272A" android:pathData="M48,10a38,38 0,1 1,0 76a38,38 0,1 1,0 -76z"/>
+  <path android:fillColor="#71717A" android:pathData="M48,30l5,10.2 11.2,1.6 -8.1,7.9 1.9,11.2 -10,-5.3 -10,5.3 1.9,-11.2 -8.1,-7.9 11.2,-1.6z"/>
+</vector>

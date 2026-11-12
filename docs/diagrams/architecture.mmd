@@ -1,0 +1,23 @@
+flowchart LR
+  subgraph CAR["차량 · Pleos Connect"]
+    SIG["차 신호<br/>Vehicle SDK · NaviHelper<br/>CarPropertyManager · CarUxRestrictions"]
+    ENG["engine (Kotlin)<br/>상태 흐름 · 도장 검증<br/>추천 · 살아 있는 코스"]
+    UI["차 앱 화면 · 소개 음성<br/>글레오 음성 명령"]
+    SIG --> ENG --> UI
+  end
+  subgraph SRV["서버 · Vercel"]
+    API["Next.js API<br/>/api/plan · /api/plan/course<br/>/api/car/events"]
+    TS["planner.ts · livecourse.ts<br/>(엔진 줄 단위 이식)"]
+    DB[("Neon Postgres<br/>장소 ID·숫자만")]
+    R2[("Cloudflare R2<br/>도장 그림")]
+    API --- TS
+    API --- DB
+    API --- R2
+  end
+  subgraph PHONE["가족 폰 · Expo"]
+    P["오늘 탭 · 도장북<br/>이어 듣기 · 코스 바꾸기"]
+  end
+  UI <-->|"HTTPS · 차 토큰<br/>코스 버전 맞추기"| API
+  P <-->|"HTTPS · 폰 토큰"| API
+  API -->|"FCM 푸시"| P
+  ENG -. "같은 시험 사례 JSON으로<br/>한 글자까지 같은 답" .- TS

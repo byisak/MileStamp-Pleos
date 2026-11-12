@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.MileStamp" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/ms_bg</item>
+        <item name="android:statusBarColor">@color/ms_bg</item>
+    </style>
+    <color name="ms_bg">#FFF3F3F3</color>
+</resources>

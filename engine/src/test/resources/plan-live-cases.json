@@ -1,0 +1,835 @@
+{
+  "placesFrom": "plan-cases.json",
+  "base": {
+    "now": "08:30",
+    "here": [35.8858, 128.5828],
+    "profile": {"home": [35.8858, 128.5828], "nap": ["13:00", "14:30"], "backBy": "sunset-30", "dinner": "18:30", "kidAges": [4, 4]},
+    "sky": {"sunrise": "06:46", "sunset": "17:32", "sky": "CLEAR", "rainFrom": "15:00"},
+    "course": ["seokgul", "samguk", "dgsm"],
+    "chosenBy": "아빠 폰",
+    "note": "시간표: 석굴 08:59-09:29 → 테마파크 09:50(문 10:00)-12:40 → 낮잠 이동 89분 → 과학관 14:09-16:09 → 집 16:47 · 한계 17:02 · 여유 15분"
+  },
+  "cases": [
+    {
+      "name": "1. 테마파크에서 30분 일찍 나옴(12:10, 출발 준비) → 낮잠 창 밖 → '12:50에 출발' 제안 + 여유 45분이라 '한 곳 더'",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:10", "from": "samguk", "driving": false}
+      ],
+      "expect": {
+        "explain": {"headline": "조금 더 놀다 가도 돼요", "body": "12:50에 출발하면 아이들이 차에서 낮잠을 잘 수 있어요. 집에는 16:57쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": ["dgsm"],
+        "status": {"seokgul": "DONE", "samguk": "DONE", "dgsm": "NEXT"},
+        "arriveHome": "16:17", "slack": 45, "version": 5,
+        "chip": "30분 일찍 · 40분 더 놀면 차에서 낮잠",
+        "voice": "30분 일찍 나섰어요. 40분만 더 놀다 가면 아이들이 차에서 89분 낮잠 잘 수 있어요.",
+        "size": "LOUD", "cause": "일찍 출발", "deltaHome": -30,
+        "labels": ["12:50에 출발", "한 곳 더 · 디아크"],
+        "optionStops": [["dgsm"], ["dgsm", "thearc"]],
+        "optionArriveHome": ["16:57", "16:49"],
+        "napDrive": false,
+        "warnings": ["깨어 있는 이동 89분 (국립대구과학관)"]
+      }
+    },
+    {
+      "name": "2. 과학관에서 1시간 늦게 나옴(17:10) → 한계 침범, 뺄 곳 없음 → HomeNow",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true},
+        {"type": "Arrived", "now": "14:09", "place": "dgsm"},
+        {"type": "StillParked", "now": "16:30"},
+        {"type": "Departed", "now": "17:10", "from": "dgsm", "driving": true}
+      ],
+      "expect": {
+        "explain": {"headline": "집으로 가는 길이에요", "body": "오늘 3곳을 다녀왔어요. 집에는 17:48쯤 도착해요.", "action": null},
+        "kind": "HomeNow",
+        "remaining": [],
+        "status": {"dgsm": "DONE"},
+        "arriveHome": "17:48", "slack": -46, "version": 8,
+        "chip": "귀가 한계를 넘어요 · 집 17:48 도착",
+        "voice": "40분 늦게 나섰어요. 지금 집으로 가는 게 좋겠어요. 17:48쯤 도착해요.",
+        "size": "LOUD", "cause": "한계 침범", "deltaHome": 40
+      }
+    },
+    {
+      "name": "3. 내비 ETA 36분 vs 어림 29분 (두 번 연속, 24%) → 다음 도착 +7, 계수 1.3→1.39, 귀가 +10 → 조용히 시간표만",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "NaviEta", "now": "08:31", "remainMin": 36, "driving": true},
+        {"type": "NaviEta", "now": "08:32", "remainMin": 36, "driving": true}
+      ],
+      "expect": {
+        "explain": {"headline": "조금 늦어졌지만 괜찮아요", "body": "다음은 군위 삼존석굴, 09:08에 도착해요. 집에는 16:57쯤, 해 지기 35분 전에 와요.", "action": null},
+        "kind": "Retimed",
+        "remaining": ["seokgul", "samguk", "dgsm"],
+        "arriveHome": "16:57", "slack": 5, "version": 2,
+        "chip": "내비 +7분 · 군위 삼존석굴 09:08 · 귀가 16:57",
+        "voice": "내비 예상이 어림보다 7분 길어요. 군위 삼존석굴에는 09:08, 집에는 16:57쯤 도착해요.",
+        "size": "QUIET", "cause": "내비", "deltaHome": 10,
+        "roadFactor": 1.39, "napDrive": true
+      }
+    },
+    {
+      "name": "4. 비 시작 15:00 → 12:30으로 당겨짐, 테마파크(야외) 체류 중 → '비 오기 전 12:30 출발' 제안 (시간표는 그대로)",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Weather", "now": "11:00", "sky": "CLEAR", "rainFrom": "12:30"}
+      ],
+      "expect": {
+        "explain": {"headline": "곧 비가 와요", "body": "12:30에 먼저 나서면 비를 피할 수 있어요. 집에는 16:37쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": ["dgsm"],
+        "status": {"samguk": "ARRIVED"},
+        "arriveHome": "16:47", "version": 5,
+        "chip": "비 12:30부터 · 12:30에 먼저 나설까요",
+        "voice": "비가 12:30부터 와요. 12:30에 먼저 나설까요?",
+        "size": "LOUD", "cause": "비", "deltaHome": 0,
+        "labels": ["비 오기 전 12:30 출발"],
+        "optionStops": [["dgsm"]],
+        "optionArriveHome": ["16:37"],
+        "warnings": ["삼국유사테마파크 머무는 중 비 (12:30부터)"]
+      }
+    },
+    {
+      "name": "5. \"다음은 디아크로\" (테마파크 출발 직후, 주행 중) → 디아크 → 과학관 순서, 17:27이라 한계 넘음 → 덜 놀기·빼기 제안",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true},
+        {"type": "ReplaceNext", "now": "12:52", "place": "thearc", "driving": true}
+      ],
+      "expect": {
+        "explain": {"headline": "이대로면 조금 늦어요", "body": "국립대구과학관에서 25분만 덜 놀면 집에 17:02에 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": ["thearc", "dgsm"],
+        "arriveHome": "17:27", "slack": -25, "version": 6,
+        "chip": "다음은 디아크 · 국립대구과학관 25분 덜 놀기면 17:02 귀가",
+        "voice": "다음은 디아크로 안내할게요. 그대로 가면 17:27 귀가라 한계를 넘어요. 국립대구과학관 25분 덜 놀기면 17:02에 집에 도착해요. 그렇게 할까요?",
+        "size": "LOUD", "cause": "다음 바꾸기", "deltaHome": 40,
+        "labels": ["국립대구과학관 25분 덜 놀기", "국립대구과학관 빼기"],
+        "optionStops": [["thearc", "dgsm"], ["thearc"]],
+        "optionArriveHome": ["17:02", "14:40"],
+        "napDrive": true
+      }
+    },
+    {
+      "name": "6. 폰에서 과학관 빼기 (주행 중 — 차는 다음 정차 때 적용, 이건 엔진 답) → 여유 3시간 51분 → '한 곳 더' 1장",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true},
+        {"type": "Skip", "now": "13:00", "place": "dgsm", "driving": true, "here": [35.95, 128.6]}
+      ],
+      "expect": {
+        "explain": {"headline": "한 곳 더 갈 수 있어요", "body": "대구아쿠아리움에 들렀다 가도 집에 15:00쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": [],
+        "status": {"dgsm": "SKIPPED"},
+        "arriveHome": "13:11", "slack": 231, "version": 6,
+        "chip": "국립대구과학관 뺐어요 · 한 곳 더 갈 수 있어요",
+        "voice": "국립대구과학관을 뺐어요. 시간이 3시간 51분 남아요. 대구아쿠아리움에 들렀다 갈까요?",
+        "size": "LOUD", "cause": "빼기", "deltaHome": -216,
+        "labels": ["한 곳 더 · 대구아쿠아리움"],
+        "optionStops": [["aquarium"]],
+        "optionArriveHome": ["15:00"]
+      }
+    },
+    {
+      "name": "7. \"집으로 가자\" 14:30 (과학관 머무는 중) → 남은 곳 없음, 집으로 (패턴은 안 배움)",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true},
+        {"type": "Arrived", "now": "14:09", "place": "dgsm"},
+        {"type": "GoHome", "now": "14:30"}
+      ],
+      "expect": {
+        "explain": {"headline": "집으로 가는 길이에요", "body": "오늘 3곳을 다녀왔어요. 집에는 15:08쯤 도착해요.", "action": null},
+        "kind": "HomeNow",
+        "remaining": [],
+        "status": {"dgsm": "DONE"},
+        "arriveHome": "15:08", "version": 7,
+        "chip": "집으로 · 15:08 도착",
+        "voice": "집으로 안내할게요. 15:08쯤 도착해요.",
+        "size": "LOUD", "cause": "집으로", "deltaHome": -99,
+        "dwellScale": 1.0
+      }
+    },
+    {
+      "name": "8. 휴게소 25분 정차 (낮잠 이동 중, 13:30에 같은 자리) → 귀가 +25, 17:12라 한계 넘음 → 덜 놀기·빼기 제안",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true},
+        {"type": "StillParked", "now": "13:30", "here": [36.03, 128.63]}
+      ],
+      "expect": {
+        "explain": {"headline": "이대로면 조금 늦어요", "body": "국립대구과학관에서 10분만 덜 놀면 집에 17:02에 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": ["dgsm"],
+        "arriveHome": "17:12", "slack": -10, "version": 6,
+        "chip": "예상 밖 정차 25분 · 국립대구과학관 10분 덜 놀기면 17:02 귀가",
+        "voice": "길에서 25분 쉬었어요. 그대로 가면 17:12 귀가라 한계를 넘어요. 국립대구과학관 10분 덜 놀기면 17:02에 집에 도착해요. 그렇게 할까요?",
+        "size": "LOUD", "cause": "예상 밖 정차", "deltaHome": 25,
+        "labels": ["국립대구과학관 10분 덜 놀기", "국립대구과학관 빼기"],
+        "optionStops": [["dgsm"], []],
+        "optionArriveHome": ["17:02", "13:56"],
+        "napDrive": false,
+        "warnings": ["깨어 있는 이동 64분 (국립대구과학관)"]
+      }
+    },
+    {
+      "name": "9. 석굴에서 4분 일찍 출발 → 테마파크 문 열기를 기다려 같은 시간표, 변화 5분 미만 → NoChange (8분 일찍이면 다음 도착 −8이라 조용한 Retimed + 머무름 22분<24분 패턴 ×0.9)",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:26", "from": "seokgul", "driving": true}
+      ],
+      "expect": {
+        "explain": {"headline": "계획대로 가고 있어요", "body": "다음은 삼국유사테마파크, 09:47에 도착해요. 집에는 16:47쯤, 해 지기 45분 전에 와요.", "action": null},
+        "kind": "NoChange",
+        "remaining": ["samguk", "dgsm"],
+        "status": {"seokgul": "DONE", "samguk": "NEXT"},
+        "arriveHome": "16:47", "version": 3,
+        "dwellScale": 1.0, "napDrive": true
+      }
+    },
+    {
+      "name": "10. 해 짐 17:32 → 17:10 (서버 갱신) → 한계 16:40, 16:47 귀가라 7분 넘음 → 덜 놀기·빼기 제안",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "LimitChanged", "now": "11:00", "limit": "16:40"}
+      ],
+      "expect": {
+        "explain": {"headline": "이대로면 조금 늦어요", "body": "국립대구과학관에서 7분만 덜 놀면 집에 16:40에 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": ["dgsm"],
+        "arriveHome": "16:47", "slack": -7, "version": 5,
+        "chip": "귀가 한계 16:40 · 국립대구과학관 7분 덜 놀기면 16:40 귀가",
+        "voice": "귀가 한계가 16:40으로 바뀌었어요. 그대로 가면 16:47 귀가라 한계를 넘어요. 국립대구과학관 7분 덜 놀기면 16:40에 집에 도착해요. 그렇게 할까요?",
+        "size": "LOUD", "cause": "한계", "deltaHome": 0,
+        "labels": ["국립대구과학관 7분 덜 놀기", "국립대구과학관 빼기"],
+        "optionStops": [["dgsm"], []],
+        "optionArriveHome": ["16:40", "13:31"]
+      }
+    },
+    {
+      "name": "11. 버전 3 코스가 들어왔는데 차는 4 → 무시",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Remote", "now": "11:00", "version": 3, "stops": ["seokgul", "samguk", "thearc"], "by": "엄마 폰"}
+      ],
+      "expect": {
+        "explain": {"headline": "계획대로 가고 있어요", "body": "12:40에 나서면 국립대구과학관에 14:09에 도착해요. 집에는 16:47쯤, 해 지기 45분 전에 와요.", "action": null},
+        "kind": "NoChange",
+        "remaining": ["dgsm"],
+        "arriveHome": "16:47", "version": 4
+      }
+    },
+    {
+      "name": "11b. 버전 9 코스(과학관 → 디아크)가 들어옴 → 받아들임(버전 10), 차가 다녀온 곳은 그대로, 여유 커져 '한 곳 더'",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Remote", "now": "11:00", "version": 9, "stops": ["seokgul", "samguk", "thearc"], "by": "엄마 폰"}
+      ],
+      "expect": {
+        "explain": {"headline": "한 곳 더 갈 수 있어요", "body": "대구어린이세상에 들렀다 가도 집에 16:41쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": ["thearc"],
+        "status": {"seokgul": "DONE", "samguk": "ARRIVED", "thearc": "NEXT"},
+        "arriveHome": "14:28", "slack": 154, "version": 10,
+        "chip": "엄마 폰이 코스를 바꿨어요 · 한 곳 더 갈 수 있어요",
+        "voice": "엄마 폰이 코스를 바꿨어요. 시간이 2시간 34분 남아요. 대구어린이세상에 들렀다 갈까요?",
+        "size": "LOUD", "cause": "폰 변경", "deltaHome": -139,
+        "labels": ["한 곳 더 · 대구어린이세상"],
+        "optionStops": [["thearc", "kidsworld"]],
+        "optionArriveHome": ["16:41"],
+        "napDrive": true
+      }
+    },
+    {
+      "name": "13. 석굴에 18분만 머물고 출발 (예정 30분의 80% 미만) → 오늘 패턴: 남은 곳 머무름 ×0.9, 테마파크 12:50 출발로 늘려 낮잠 이동",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:18", "from": "seokgul", "driving": true}
+      ],
+      "expect": {
+        "explain": {"headline": "계획대로 가고 있어요", "body": "다음은 삼국유사테마파크, 09:39에 도착해요. 집에는 16:45쯤, 해 지기 47분 전에 와요.", "action": null},
+        "kind": "Retimed",
+        "remaining": ["samguk", "dgsm"],
+        "arriveHome": "16:45", "version": 3,
+        "chip": "12분 일찍 · 삼국유사테마파크 09:39 · 귀가 16:45",
+        "voice": "12분 일찍 나섰어요. 삼국유사테마파크에는 09:39, 집에는 16:45쯤 도착해요.",
+        "size": "QUIET", "cause": "일찍 출발", "deltaHome": -2,
+        "dwellScale": 0.9, "dwell": {"samguk": 144, "dgsm": 108},
+        "napDrive": true
+      }
+    },
+    {
+      "name": "14. 마지막 곳(과학관)에서 15:00에 다시 탐(출발 준비) → 코스를 버리지 않고 '한 곳 더'(여유 ≥ 45분) + '바로 집으로' 카드",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true},
+        {"type": "Arrived", "now": "14:09", "place": "dgsm"},
+        {"type": "Departed", "now": "15:00", "from": "dgsm", "driving": false}
+      ],
+      "expect": {
+        "explain": {"headline": "한 곳 더 갈 수 있어요", "body": "국립대구기상과학관에 들렀다 가도 집에 16:37쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": [],
+        "status": {"dgsm": "DONE"},
+        "arriveHome": "15:38",
+        "slack": 84,
+        "version": 7,
+        "chip": "69분 일찍 · 한 곳 더 갈 수 있어요",
+        "voice": "69분 일찍 나섰어요. 시간이 1시간 24분 남아요. 국립대구기상과학관에 들렀다 갈까요?",
+        "size": "LOUD",
+        "cause": "일찍 출발",
+        "deltaHome": -69,
+        "labels": ["한 곳 더 · 국립대구기상과학관", "바로 집으로"],
+        "optionStops": [["weather"], []],
+        "optionArriveHome": ["16:37", "15:38"],
+        "proposalExpired": null
+      }
+    },
+    {
+      "name": "14b. 마지막 곳에서 16:20에 다시 탐 → 여유 45분 미만이라 '바로 집으로' 1장",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true},
+        {"type": "Arrived", "now": "14:09", "place": "dgsm"},
+        {"type": "Departed", "now": "16:20", "from": "dgsm", "driving": false}
+      ],
+      "expect": {
+        "explain": {"headline": "바로 집으로 갈까요", "body": "지금 출발하면 집에 16:58쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": [],
+        "status": {"dgsm": "DONE"},
+        "arriveHome": "16:58",
+        "slack": 4,
+        "version": 7,
+        "chip": "11분 늦게 · 바로 집으로 갈까요",
+        "voice": "11분 늦게 나섰어요. 바로 집으로 가면 16:58쯤 도착해요.",
+        "size": "LOUD",
+        "cause": "늦게 출발",
+        "labels": ["바로 집으로"],
+        "optionStops": [[]],
+        "optionArriveHome": ["16:58"]
+      }
+    },
+    {
+      "name": "15. 사례 1의 제안('12:50에 출발'·'한 곳 더 · 디아크') → 12:51이면 지남 (권한 출발 시각이 지남)",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:10", "from": "samguk", "driving": false}
+      ],
+      "check": {"at": "12:51"},
+      "expect": {
+        "explain": {"headline": "조금 더 놀다 가도 돼요", "body": "12:50에 출발하면 아이들이 차에서 낮잠을 잘 수 있어요. 집에는 16:57쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "labels": ["12:50에 출발", "한 곳 더 · 디아크"],
+        "proposalExpired": "12:50 출발이 지났어요"
+      }
+    },
+    {
+      "name": "15b. 사례 1의 제안 — 12:50 정각까지는 유효",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:10", "from": "samguk", "driving": false}
+      ],
+      "check": {"at": "12:50"},
+      "expect": {
+        "explain": {"headline": "조금 더 놀다 가도 돼요", "body": "12:50에 출발하면 아이들이 차에서 낮잠을 잘 수 있어요. 집에는 16:57쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "proposalExpired": null
+      }
+    },
+    {
+      "name": "15c. 사례 1의 제안 뒤 고르지 않고 12:20에 출발(주행 중) → 다른 사건이 코스를 바꿨으니 지남",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:10", "from": "samguk", "driving": false},
+        {"type": "Departed", "now": "12:20", "from": null, "driving": true}
+      ],
+      "expect": {
+        "explain": {"headline": "조금 늦어졌지만 괜찮아요", "body": "다음은 국립대구과학관, 13:49에 도착해요. 집에는 16:27쯤, 해 지기 1시간 5분 전에 와요.", "action": null},
+        "kind": "Retimed",
+        "version": 6,
+        "proposalExpired": "코스가 바뀌었어요"
+      }
+    },
+    {
+      "name": "15d. 사례 1의 제안 — 12:30에 이미 디아크에 섰음(코스 밖) → '한 곳 더 · 디아크'가 지남",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:10", "from": "samguk", "driving": false}
+      ],
+      "check": {"at": "12:30", "visited": ["thearc"]},
+      "expect": {
+        "explain": {"headline": "조금 더 놀다 가도 돼요", "body": "12:50에 출발하면 아이들이 차에서 낮잠을 잘 수 있어요. 집에는 16:57쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "proposalExpired": "디아크에 이미 갔어요"
+      }
+    },
+    {"name": "16. 내비 없이 08:57(석굴 예정 08:59), 아직 집과 석굴 사이 1/4 지점 → 남은 22분 다시 어림 → 석굴 +20분이라 LOUD Retimed", "events": [{"type": "Departed", "now": "08:30", "from": null, "driving": true}, {"type": "StillDriving", "now": "08:57", "here": [35.9266, 128.5973], "driving": true}], "expect": {"explain": {"headline": "조금 늦어졌지만 괜찮아요", "body": "다음은 군위 삼존석굴, 09:19에 도착해요. 집에는 16:57쯤, 해 지기 35분 전에 와요.", "action": null}, "kind": "Retimed", "remaining": ["seokgul", "samguk", "dgsm"], "arriveHome": "16:57", "slack": 5, "version": 2, "chip": "예정보다 늦어요 · 다음 도착 09:19 · 귀가 16:57", "voice": "예정보다 늦어지고 있어요. 군위 삼존석굴에는 09:19, 집에는 16:57쯤 도착해요.", "size": "LOUD", "cause": "늦어짐", "deltaHome": 10, "roadFactor": 1.3, "napDrive": true}},
+    {"name": "16b. 16 뒤 09:07에도 1/4 지점 근처 → 17:05 귀가로 3분 넘음 → 덜 놀기 제안, 같은 원인 30분 안이라 QUIET", "events": [{"type": "Departed", "now": "08:30", "from": null, "driving": true}, {"type": "StillDriving", "now": "08:57", "here": [35.9266, 128.5973], "driving": true}, {"type": "StillDriving", "now": "09:07", "here": [35.94, 128.60], "driving": true}], "expect": {"explain": {"headline": "이대로면 조금 늦어요", "body": "국립대구과학관에서 3분만 덜 놀면 집에 17:02에 도착해요.", "action": null}, "kind": "Proposal", "remaining": ["seokgul", "samguk", "dgsm"], "arriveHome": "17:05", "slack": -3, "version": 3, "chip": "예정보다 늦어요 · 국립대구과학관 3분 덜 놀기면 17:02 귀가", "voice": "예정보다 늦어지고 있어요. 그대로 가면 17:05 귀가라 한계를 넘어요. 국립대구과학관 3분 덜 놀기면 17:02에 집에 도착해요. 그렇게 할까요?", "size": "QUIET", "cause": "늦어짐", "deltaHome": 8, "labels": ["국립대구과학관 3분 덜 놀기", "국립대구과학관 빼기"], "optionStops": [["seokgul", "samguk", "dgsm"], ["seokgul", "samguk"]], "optionArriveHome": ["17:02", "13:49"]}},
+    {"name": "16c. 08:58에 석굴 바로 앞 → 남은 구간 최소 3분 → 변화 5분 미만 → NoChange", "events": [{"type": "Departed", "now": "08:30", "from": null, "driving": true}, {"type": "StillDriving", "now": "08:58", "here": [36.0489, 128.6409], "driving": true}], "expect": {"explain": {"headline": "계획대로 가고 있어요", "body": "다음은 군위 삼존석굴, 09:01에 도착해요. 집에는 16:47쯤, 해 지기 45분 전에 와요.", "action": null}, "kind": "NoChange", "remaining": ["seokgul", "samguk", "dgsm"], "arriveHome": "16:47", "version": 2, "napDrive": true}},
+    {"name": "16d. 내비 없이 14:08(과학관 예정 14:09) 아직 휴게소 근처 → 64분 남아 17:50 귀가, 48분 넘어 덜 놀기 안 됨 → 과학관 빼기 제안", "events": [{"type": "Departed", "now": "08:30", "from": null, "driving": true}, {"type": "Arrived", "now": "09:00", "place": "seokgul"}, {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true}, {"type": "Arrived", "now": "10:00", "place": "samguk"}, {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true}, {"type": "StillDriving", "now": "14:08", "here": [36.03, 128.63], "driving": true}], "expect": {"explain": {"headline": "이대로면 늦어요", "body": "국립대구과학관을 빼면 집에 14:34에 도착해요.", "action": null}, "kind": "Proposal", "remaining": ["dgsm"], "arriveHome": "17:50", "slack": -48, "version": 6, "chip": "예정보다 늦어요 · 국립대구과학관 빼기면 14:34 귀가", "voice": "예정보다 늦어지고 있어요. 그대로 가면 17:50 귀가라 한계를 넘어요. 국립대구과학관 빼기면 14:34에 집에 도착해요. 그렇게 할까요?", "size": "LOUD", "cause": "늦어짐", "deltaHome": 63, "labels": ["국립대구과학관 빼기"], "optionStops": [[]], "optionArriveHome": ["14:34"], "napDrive": false, "warnings": ["깨어 있는 이동 64분 (국립대구과학관)"]}},
+    {
+      "name": "17. 고르고 출발 안 함 → 11:00 Tick (석굴 예정 08:59, 2시간 넘게 뒤처짐) → 지금부터 다시 짬, 한계 넘어 빼기 제안",
+      "events": [
+        {"type": "Tick", "now": "11:00"}
+      ],
+      "expect": {
+        "explain": {"headline": "이대로면 늦어요", "body": "국립대구과학관을 빼면 집에 15:51에 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": ["seokgul", "samguk", "dgsm"],
+        "status": {"seokgul": "NEXT", "samguk": "PLANNED", "dgsm": "PLANNED"},
+        "arriveHome": "18:08",
+        "version": 2,
+        "chip": "예정보다 121분 늦어요 · 국립대구과학관 빼기면 15:51 귀가",
+        "voice": "예정보다 121분 늦어졌어요. 그대로 가면 18:08 귀가라 한계를 넘어요. 국립대구과학관 빼기면 15:51에 집에 도착해요. 그렇게 할까요?",
+        "size": "LOUD",
+        "cause": "늦어짐"
+      }
+    },
+    {
+      "name": "17b. 고르고 출발 안 함 → 16:30 Tick → 테마파크·과학관은 문 닫을 시간이라 건너뜀, 석굴만 남아도 한계 넘음 → 아직 집이니 '오늘은 다음에'",
+      "events": [
+        {"type": "Tick", "now": "16:30"}
+      ],
+      "expect": {
+        "explain": {"headline": "오늘은 다음에 가는 게 좋겠어요", "body": "삼국유사테마파크·국립대구과학관은 벌써 문 닫을 시간이에요. 남은 곳까지 다녀오면 17:58에야 집에 와요.", "action": "END", "home": "16:30"},
+        "kind": "Proposal",
+        "remaining": ["seokgul"],
+        "status": {"seokgul": "NEXT", "samguk": "SKIPPED", "dgsm": "SKIPPED"},
+        "arriveHome": "17:58",
+        "version": 2,
+        "chip": "2곳 문 닫을 시간 · 군위 삼존석굴 빼기면 16:30 귀가",
+        "voice": "삼국유사테마파크·국립대구과학관은 문 닫을 시간이라 건너뛰었어요. 그대로 가면 17:58 귀가라 한계를 넘어요. 군위 삼존석굴 빼기면 16:30에 집에 도착해요. 그렇게 할까요?",
+        "size": "LOUD",
+        "cause": "문 닫음"
+      }
+    },
+    {
+      "name": "17c. 과학관에서 예정 출발(16:09)을 넘겨 16:40 Tick → 지금 나서도 한계 넘음 → HomeNow, 설명은 '지금 바로 출발하면'",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "Departed", "now": "12:40", "from": "samguk", "driving": true},
+        {"type": "Arrived", "now": "14:09", "place": "dgsm"},
+        {"type": "Tick", "now": "16:40"}
+      ],
+      "expect": {
+        "explain": {"headline": "오늘은 여기까지가 좋겠어요", "body": "지금 바로 출발하면 집에 17:18에 도착해요. 더 머물면 너무 늦어져요.", "action": "GO_HOME", "home": "17:18"},
+        "kind": "HomeNow",
+        "remaining": [],
+        "status": {"seokgul": "DONE", "samguk": "DONE", "dgsm": "ARRIVED"},
+        "arriveHome": "17:18",
+        "version": 7,
+        "chip": "귀가 한계를 넘어요 · 집 17:18 도착",
+        "voice": "예정보다 31분 늦어졌어요. 지금 집으로 가는 게 좋겠어요. 17:18쯤 도착해요.",
+        "size": "LOUD",
+        "cause": "한계 침범"
+      }
+    },
+    {
+      "name": "17d. 출발 10분 뒤 Tick (석굴 예정 도착 전) → 뒤처지지 않음 → NoChange",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Tick", "now": "08:40"}
+      ],
+      "expect": {
+        "explain": {"headline": "계획대로 가고 있어요", "body": "다음은 군위 삼존석굴, 08:59에 도착해요. 집에는 16:47쯤, 해 지기 45분 전에 와요.", "action": null},
+        "kind": "NoChange",
+        "remaining": ["seokgul", "samguk", "dgsm"],
+        "status": {"seokgul": "NEXT", "samguk": "PLANNED", "dgsm": "PLANNED"},
+        "arriveHome": "16:47",
+        "version": 1
+      }
+    },
+    {
+      "name": "17e. 테마파크에 있는데 저장된 시간표가 13:30에 멈춤 → 15:10에 화면 설명만 (Tick을 해 본 결과로, 코스는 그대로)",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "StillParked", "now": "13:30"}
+      ],
+      "check": {"explainAt": "15:10"},
+      "expect": {
+        "explain": {"headline": "이대로면 늦어요", "body": "국립대구과학관을 빼면 집에 16:01에 도착해요.", "action": null},
+        "kind": "Proposal",
+        "remaining": ["dgsm"],
+        "status": {"seokgul": "DONE", "samguk": "ARRIVED", "dgsm": "NEXT"},
+        "arriveHome": "17:37",
+        "version": 5,
+        "chip": "아직 삼국유사테마파크 · 국립대구과학관 빼기면 14:21 귀가",
+        "voice": "삼국유사테마파크에 예정보다 오래 있어요. 그대로 가면 17:37 귀가라 한계를 넘어요. 국립대구과학관 빼기면 14:21에 집에 도착해요. 그렇게 할까요?",
+        "size": "LOUD",
+        "cause": "머무름 길어짐"
+      }
+    },
+    {
+      "name": "18. 폰 화면 사진 상태 재현: 출발 전 16:20에 테마파크 빼기 → 과학관은 문 닫기 전에 못 가고 석굴만 가도 한계 넘음 → HomeNow, 코스는 그대로(석굴 '다음'·과학관 남음·귀가 18시대)",
+      "events": [
+        {"type": "Skip", "now": "16:20", "place": "samguk"}
+      ],
+      "expect": {
+        "explain": {"headline": "오늘은 다음에 가는 게 좋겠어요", "body": "국립대구과학관은 벌써 문 닫을 시간이에요. 남은 곳까지 다녀오면 17:48에야 집에 와요.", "action": "END", "home": "16:20"},
+        "kind": "HomeNow",
+        "remaining": ["seokgul", "dgsm"],
+        "status": {"seokgul": "NEXT", "samguk": "SKIPPED", "dgsm": "PLANNED"},
+        "arriveHome": "19:05",
+        "version": 2,
+        "chip": "오늘은 다녀오기 어려워요",
+        "voice": "삼국유사테마파크를 뺐어요. 오늘은 다음에 가는 게 좋겠어요.",
+        "size": "LOUD",
+        "cause": "한계 침범"
+      }
+    },
+    {
+      "name": "18b. 18 뒤 서버가 코스를 꺼내며 Tick(16:21) → 과학관은 문 닫을 시간이라 건너뜀(까닭 '문 닫음'), 석굴 빼기 제안 → 아직 집이라 설명은 '오늘은 다음에'",
+      "events": [
+        {"type": "Skip", "now": "16:20", "place": "samguk"},
+        {"type": "Tick", "now": "16:21"}
+      ],
+      "expect": {
+        "explain": {"headline": "오늘은 다음에 가는 게 좋겠어요", "body": "국립대구과학관은 벌써 문 닫을 시간이에요. 남은 곳까지 다녀오면 17:49에야 집에 와요.", "action": "END", "home": "16:21"},
+        "kind": "Proposal",
+        "remaining": ["seokgul"],
+        "status": {"seokgul": "NEXT", "samguk": "SKIPPED", "dgsm": "SKIPPED"},
+        "arriveHome": "17:49",
+        "version": 3,
+        "chip": "국립대구과학관 문 닫을 시간 · 군위 삼존석굴 빼기면 16:21 귀가",
+        "voice": "국립대구과학관은 문 닫을 시간이라 건너뛰었어요. 그대로 가면 17:49 귀가라 한계를 넘어요. 군위 삼존석굴 빼기면 16:21에 집에 도착해요. 그렇게 할까요?",
+        "size": "LOUD",
+        "cause": "문 닫음"
+      }
+    },
+    {
+      "name": "19. 석굴에서 09:30 출발 준비 중 테마파크 휴무 → 교체 카드, 설명은 '…가 문을 닫았어요. …로 바꾸면'",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "PlaceClosed", "now": "09:20", "place": "samguk"}
+      ],
+      "expect": {
+        "explain": {"headline": "삼국유사테마파크 대신 대구아쿠아리움 어때요", "body": "삼국유사테마파크가 문을 닫았어요. 대구아쿠아리움으로 바꾸면 집에 15:28쯤 도착해요.", "action": null},
+        "kind": "Proposal",
+        "status": {"seokgul": "ARRIVED", "samguk": "SKIPPED", "dgsm": "NEXT"},
+        "chip": "삼국유사테마파크 문 닫음 · 한 곳 더 갈 수 있어요",
+        "labels": ["삼국유사테마파크 → 대구아쿠아리움", "한 곳 더 · 대구어린이세상"]
+      }
+    },
+    {
+      "name": "20. 도착지 할머니 집 (아침, 도착지만) → 마지막 구간이 할머니 집, 글도 할머니 집",
+      "events": [
+        {"type": "SetEnd", "now": "08:30", "end": {"name": "할머니 집", "at": [35.8, 128.5]}}
+      ],
+      "expect": {
+        "kind": "Retimed",
+        "end": "할머니 집",
+        "limit": "17:02",
+        "arriveHome": "16:29",
+        "remaining": ["seokgul", "samguk", "dgsm"],
+        "napDrive": true,
+        "version": 2,
+        "chip": "도착지 할머니 집 · 할머니 집에 16:29 도착",
+        "voice": "도착지를 할머니 집으로 바꿨어요. 군위 삼존석굴에는 08:59, 할머니 집에는 16:29쯤 도착해요.",
+        "size": "LOUD",
+        "cause": "도착지",
+        "deltaHome": -18,
+        "explain": {"headline": "오늘은 할머니 집으로 가요", "body": "다음은 군위 삼존석굴, 08:59에 도착해요. 할머니 집에는 16:29쯤, 해 지기 1시간 3분 전에 와요.", "action": null}
+      }
+    },
+    {
+      "name": "20b. 할머니 집 + 도착 목표 19:00 (오늘만) → 여유 151분, 한 곳 더는 안 붙임",
+      "events": [
+        {"type": "SetEnd", "now": "08:30", "end": {"name": "할머니 집", "at": [35.8, 128.5]}, "limit": "19:00"}
+      ],
+      "expect": {
+        "kind": "Retimed",
+        "end": "할머니 집",
+        "limit": "19:00",
+        "arriveHome": "16:29",
+        "slack": 151,
+        "chip": "도착지 할머니 집 · 19:00까지 · 할머니 집에 16:29 도착",
+        "voice": "도착지를 할머니 집으로 바꿨어요. 19:00까지 도착하게 맞출게요. 군위 삼존석굴에는 08:59, 할머니 집에는 16:29쯤 도착해요."
+      }
+    },
+    {
+      "name": "20c. 도착 목표 16:30 → 그대로면 넘쳐서 덜 놀기·빼기 제안",
+      "events": [
+        {"type": "SetEnd", "now": "08:30", "limit": "16:30"}
+      ],
+      "expect": {
+        "kind": "Proposal",
+        "end": "집",
+        "limit": "16:30",
+        "arriveHome": "16:47",
+        "chip": "16:30까지 · 국립대구과학관 17분 덜 놀기면 16:30 귀가",
+        "cause": "도착지",
+        "labels": ["국립대구과학관 17분 덜 놀기", "국립대구과학관 빼기"],
+        "optionArriveHome": ["16:30", "13:31"],
+        "explain": {"headline": "이대로면 조금 늦어요", "body": "국립대구과학관에서 17분만 덜 놀면 집에 16:30에 도착해요.", "action": null}
+      }
+    },
+    {
+      "name": "20d. 오늘 낮잠 안 자요 → 낮잠 이동 없이 (긴 이동은 경고만)",
+      "events": [
+        {"type": "SetEnd", "now": "08:30", "napOff": true}
+      ],
+      "expect": {
+        "kind": "Retimed",
+        "napDrive": false,
+        "arriveHome": "16:47",
+        "warnings": ["깨어 있는 이동 89분 (국립대구과학관)"],
+        "chip": "낮잠 안 자요 · 집에 16:47 도착",
+        "voice": "오늘은 낮잠 없이 짤게요. 군위 삼존석굴에는 08:59, 집에는 16:47쯤 도착해요.",
+        "size": "SOFT"
+      }
+    },
+    {
+      "name": "20e. 오늘 정한 도착 목표(19:00)가 해 시각 한계 변경보다 우선",
+      "events": [
+        {"type": "SetEnd", "now": "08:30", "limit": "19:00"},
+        {"type": "LimitChanged", "now": "09:00", "limit": "16:50"}
+      ],
+      "expect": {
+        "kind": "NoChange",
+        "limit": "19:00",
+        "version": 2
+      }
+    },
+    {
+      "name": "20f. 할머니 집으로 정한 뒤 테마파크에서 지금 집으로 → 할머니 집으로 안내",
+      "events": [
+        {"type": "SetEnd", "now": "08:30", "end": {"name": "할머니 집", "at": [35.8, 128.5]}, "limit": "19:00"},
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:05", "place": "seokgul"},
+        {"type": "Departed", "now": "10:30", "from": "seokgul"},
+        {"type": "Arrived", "now": "11:20", "place": "samguk"},
+        {"type": "GoHome", "now": "12:00"}
+      ],
+      "expect": {
+        "kind": "HomeNow",
+        "end": "할머니 집",
+        "arriveHome": "13:09",
+        "remaining": [],
+        "chip": "할머니 집으로 · 13:09 도착",
+        "voice": "할머니 집으로 안내할게요. 13:09쯤 도착해요.",
+        "explain": {"headline": "할머니 집으로 가는 길이에요", "body": "오늘 2곳을 다녀왔어요. 할머니 집에는 13:09쯤 도착해요.", "action": null}
+      }
+    },
+    {
+      "name": "20g. 할머니 집 → 다시 집으로 (같은 원인 30분 안이라 QUIET)",
+      "events": [
+        {"type": "SetEnd", "now": "08:30", "end": {"name": "할머니 집", "at": [35.8, 128.5]}},
+        {"type": "SetEnd", "now": "08:40", "end": "home"}
+      ],
+      "expect": {
+        "kind": "Retimed",
+        "end": "집",
+        "arriveHome": "16:47",
+        "chip": "도착지 집 · 집에 16:47 도착",
+        "size": "QUIET",
+        "version": 3,
+        "explain": {"headline": "계획대로 가고 있어요", "body": "다음은 군위 삼존석굴, 09:09에 도착해요. 집에는 16:47쯤, 해 지기 45분 전에 와요.", "action": null}
+      }
+    },
+    {
+      "name": "21. 출발 전 과학관 머무름을 60분으로 (오늘만) → 귀가 15:47, 여유 75분 → '한 곳 더'",
+      "events": [
+        {"type": "SetDwell", "now": "08:30", "place": "dgsm", "minutes": 60}
+      ],
+      "expect": {"kind": "Proposal", "remaining": ["seokgul", "samguk", "dgsm"], "arriveHome": "15:47", "slack": 75, "version": 2, "dwell": {"dgsm": 60}, "dwellSet": ["dgsm"], "chip": "국립대구과학관 60분 · 한 곳 더 갈 수 있어요", "voice": "국립대구과학관을 60분으로 바꿨어요. 시간이 1시간 15분 남아요. 국립대구기상과학관에 들렀다 갈까요?", "size": "LOUD", "cause": "머무름", "deltaHome": -60, "labels": ["한 곳 더 · 국립대구기상과학관"], "optionArriveHome": ["16:51"]}
+    },
+    {
+      "name": "21b. 과학관을 140분으로 → 17:07이라 5분 넘음 → '과학관 5분 덜 놀기' 제안",
+      "events": [
+        {"type": "SetDwell", "now": "08:30", "place": "dgsm", "minutes": 140}
+      ],
+      "expect": {"kind": "Proposal", "arriveHome": "17:07", "slack": -5, "dwell": {"dgsm": 140}, "chip": "국립대구과학관 140분 · 국립대구과학관 5분 덜 놀기면 17:02 귀가", "cause": "머무름", "deltaHome": 20, "labels": ["국립대구과학관 5분 덜 놀기", "국립대구과학관 빼기"], "optionArriveHome": ["17:02", "13:31"]}
+    },
+    {
+      "name": "21c. 석굴을 47분으로 → 5분 단위 45분, 테마파크 문 열기 기다림이 줄어 귀가 +5분만 → 작아도 칩(SOFT)·설명에 바꾼 것",
+      "events": [
+        {"type": "SetDwell", "now": "08:30", "place": "seokgul", "minutes": 47}
+      ],
+      "expect": {"kind": "Retimed", "arriveHome": "16:52", "dwell": {"seokgul": 45}, "dwellSet": ["seokgul"], "chip": "군위 삼존석굴을 45분으로 바꿨어요 · 집에 16:52쯤", "voice": "군위 삼존석굴을 45분으로 바꿨어요. 군위 삼존석굴에는 08:59, 집에는 16:52쯤 도착해요.", "size": "SOFT", "cause": "머무름", "deltaHome": 5, "explain": {"headline": "군위 삼존석굴을 45분으로 바꿨어요", "body": "다음은 군위 삼존석굴, 08:59에 도착해요. 집에는 16:52쯤, 해 지기 40분 전에 와요.", "action": null}}
+    },
+    {
+      "name": "21d. 과학관 머무름을 5분으로 → 아래 한계 15분, 여유 2시간이라 '한 곳 더'",
+      "events": [
+        {"type": "SetDwell", "now": "08:30", "place": "dgsm", "minutes": 5}
+      ],
+      "expect": {"kind": "Proposal", "arriveHome": "15:02", "dwell": {"dgsm": 15}, "chip": "국립대구과학관 15분 · 한 곳 더 갈 수 있어요", "labels": ["한 곳 더 · 대구아쿠아리움"]}
+    },
+    {
+      "name": "22. 테마파크 12:00에 '30분 더' → 12:30 출발 예정(낮잠 이동은 12:40 이후라 '더 머물기'로 늘리지 않음)",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "ExtendStay", "now": "12:00", "minutes": 30}
+      ],
+      "expect": {"kind": "Retimed", "status": {"samguk": "ARRIVED", "dgsm": "NEXT"}, "arriveHome": "16:37", "dwell": {"samguk": 150}, "dwellSet": ["samguk"], "napDrive": false, "chip": "삼국유사테마파크에서 30분 더 놀아요 · 집에 16:37쯤", "voice": "삼국유사테마파크에서 30분 더 놀아요. 국립대구과학관에는 13:59, 집에는 16:37쯤 도착해요.", "size": "SOFT", "cause": "머무름", "deltaHome": -10, "explain": {"headline": "삼국유사테마파크에서 30분 더 놀아요", "body": "12:30에 나서면 국립대구과학관에 13:59에 도착해요. 집에는 16:37쯤, 해 지기 55분 전에 와요.", "action": null}}
+    },
+    {
+      "name": "22b. 테마파크 12:20에 '1시간 더' → 13:20 출발, 낮잠 이동 깨지고 17:27이라 넘음 → 덜 놀기·빼기",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "ExtendStay", "now": "12:20", "minutes": 60}
+      ],
+      "expect": {"kind": "Proposal", "arriveHome": "17:27", "dwell": {"samguk": 200}, "chip": "1시간 더 · 국립대구과학관 25분 덜 놀기면 17:02 귀가", "voice": "삼국유사테마파크에서 1시간 더 놀아요. 그대로 가면 17:27 귀가라 한계를 넘어요. 국립대구과학관 25분 덜 놀기면 17:02에 집에 도착해요. 그렇게 할까요?", "labels": ["국립대구과학관 25분 덜 놀기", "국립대구과학관 빼기"], "optionArriveHome": ["17:02", "14:11"]}
+    },
+    {
+      "name": "22c. 테마파크 11:30에 '지금 나갈게요'(0분) → 예정 출발 11:30, 귀가 당겨져 '한 곳 더'",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "10:00", "place": "samguk"},
+        {"type": "ExtendStay", "now": "11:30", "minutes": 0}
+      ],
+      "expect": {"kind": "Proposal", "status": {"samguk": "ARRIVED"}, "arriveHome": "15:37", "dwell": {"samguk": 90}, "chip": "지금 출발 · 한 곳 더 갈 수 있어요", "voice": "삼국유사테마파크에서 지금 나서요. 시간이 1시간 25분 남아요. 국립대구기상과학관에 들렀다 갈까요?", "labels": ["한 곳 더 · 국립대구기상과학관"]}
+    },
+    {
+      "name": "22d. 머무는 곳이 없을 때 '30분 더' → NoChange",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "ExtendStay", "now": "08:40", "minutes": 30}
+      ],
+      "expect": {"kind": "NoChange", "version": 1, "arriveHome": "16:47", "dwellSet": []}
+    },
+    {
+      "name": "23. 직접 정한 머무름은 오늘 패턴 ×0.9가 덮지 않음: 과학관 100분으로 정한 뒤 석굴 18분만 → 테마파크만 ×0.9",
+      "events": [
+        {"type": "SetDwell", "now": "08:30", "place": "dgsm", "minutes": 100},
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "seokgul"},
+        {"type": "Departed", "now": "09:18", "from": "seokgul", "driving": false}
+      ],
+      "expect": {"kind": "Retimed", "arriveHome": "16:37", "dwellScale": 0.9, "dwell": {"samguk": 144, "dgsm": 100}, "dwellSet": ["dgsm"]}
+    },
+    {
+      "name": "24. 빨리 둘러보는 가족(배율 0.8, 과학관 기록 2번 평균 100분) — 기준 코스 예상이 가족 값(석굴 25·테마파크 130·과학관 100), 예정에 없던 디아크도 가족 값(25×0.8 → 20분)",
+      "profile": {"dwellFactor": 0.8, "dwellN": 3, "placeDwell": {"dgsm": {"avg": 100, "n": 2}}},
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "09:00", "place": "thearc"}
+      ],
+      "expect": {"kind": "Proposal", "status": {"thearc": "ARRIVED"}, "dwell": {"seokgul": 25, "samguk": 130, "dgsm": 100, "thearc": 20}, "labels": ["국립대구과학관 빼기"]}
+    },
+    {
+      "name": "21e. 과학관 60분 → '한 곳 더' 제안을 고르지 않고 출발 → 설명 제목은 제안 칩 대신 '머무는 시간을 바꿨어요'",
+      "events": [
+        {"type": "SetDwell", "now": "08:30", "place": "dgsm", "minutes": 60},
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true}
+      ],
+      "check": {"explainAt": "08:35"},
+      "expect": {"kind": "NoChange", "version": 2, "explain": {"headline": "머무는 시간을 바꿨어요", "body": "다음은 군위 삼존석굴, 08:59에 도착해요. 집에는 15:47쯤, 해 지기 1시간 45분 전에 와요.", "action": null}}
+    },
+    {
+      "name": "25. 미세먼지 나쁨 날 야외가 있는 코스(석굴·테마파크)를 골라 출발 → 경고 칩 '미세먼지 나쁨 · 마스크 챙기세요'",
+      "sky": {"air": "BAD"},
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true}
+      ],
+      "expect": {"kind": "NoChange", "version": 2, "arriveHome": "16:47", "remaining": ["seokgul", "samguk", "dgsm"], "warnings": ["미세먼지 나쁨 · 마스크 챙기세요"]}
+    },
+    {
+      "name": "25b. 테마파크 머무는 중 미세먼지가 나빠짐(날씨 갱신) → 칩 한 줄(SOFT)·음성 '마스크 챙기세요', 시간표는 그대로",
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "08:59", "place": "seokgul"},
+        {"type": "Departed", "now": "09:29", "from": "seokgul", "driving": true},
+        {"type": "Arrived", "now": "09:50", "place": "samguk"},
+        {"type": "Weather", "now": "11:00", "sky": "CLEAR", "rainFrom": "15:00", "air": "VERY_BAD"}
+      ],
+      "expect": {"kind": "Retimed", "version": 5, "arriveHome": "16:47", "chip": "미세먼지 매우 나쁨 · 마스크 챙기세요", "size": "SOFT", "cause": "미세먼지", "deltaHome": 0, "voice": "미세먼지가 매우 나빠요. 마스크 챙기세요. 국립대구과학관에는 14:09, 집에는 16:47쯤 도착해요.", "warnings": ["미세먼지 매우 나쁨 · 마스크 챙기세요"]}
+    },
+    {
+      "name": "25c. 미세먼지 나쁨으로 시작 → 보통으로 좋아짐 → 경고가 사라지고 조용히 (NoChange)",
+      "sky": {"air": "BAD"},
+      "events": [
+        {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+        {"type": "Arrived", "now": "08:59", "place": "seokgul"},
+        {"type": "Weather", "now": "09:10", "sky": "CLEAR", "rainFrom": "15:00", "air": "NORMAL"}
+      ],
+      "expect": {"kind": "NoChange", "version": 4, "arriveHome": "16:47", "warnings": []}
+    }
+  ],
+  "perf": {
+    "morningSearchMaxMs": 100,
+    "eventMaxMs": 20,
+    "events": [
+      {"type": "Departed", "now": "08:30", "from": null, "driving": true},
+      {"type": "NaviEta", "now": "08:31", "remainMin": 36, "driving": true},
+      {"type": "NaviEta", "now": "08:32", "remainMin": 36, "driving": true},
+      {"type": "Arrived", "now": "09:10", "place": "seokgul"},
+      {"type": "Departed", "now": "09:30", "from": "seokgul", "driving": false},
+      {"type": "Arrived", "now": "10:00", "place": "samguk"},
+      {"type": "Weather", "now": "11:00", "sky": "CLEAR", "rainFrom": "12:30"},
+      {"type": "LimitChanged", "now": "11:10", "limit": "16:55"},
+      {"type": "Insert", "now": "11:20", "place": "thearc"},
+      {"type": "Departed", "now": "12:10", "from": "samguk", "driving": false},
+      {"type": "Skip", "now": "12:20", "place": "dgsm", "driving": true},
+      {"type": "GoHome", "now": "12:30"}
+    ]
+  }
+}

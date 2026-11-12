@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "918961669535",
+    "project_id": "milestamp-4a0fe",
+    "storage_bucket": "milestamp-4a0fe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918961669535:android:94fb29dc79e1e66c8f69aa",
+        "android_client_info": {
+          "package_name": "kr.milestamp.phone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-BQp55igqIua9UtCgr0ze53dXcgUNhXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

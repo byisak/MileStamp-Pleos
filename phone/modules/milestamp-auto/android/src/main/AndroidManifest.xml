@@ -1,0 +1,2 @@
+<!-- 서비스·권한·meta-data는 설정 플러그인(phone/plugins/withAndroidAuto.js)이 앱 매니페스트에 넣는다 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" />
